@@ -1,11 +1,10 @@
-const contactsOperations = require("../../model/contacts");
+const { Contact } = require("../../models");
 
 const updateContact = async (req, res) => {
   const { contactId } = req.params;
-  const result = await contactsOperations.updateContactById(
-    contactId,
-    req.body
-  );
+  const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+    new: true,
+  });
   if (!result) {
     res.status(404).json({
       status: "error",
