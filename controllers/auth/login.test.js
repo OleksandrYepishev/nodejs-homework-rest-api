@@ -9,22 +9,22 @@ app.post("/api/auth/login", login);
 
 describe("test login controller", () => {
   let server;
-  beforeAll(() => (server = app.listen(3000)));
+  beforeAll(() => (server = app.listen(3001)));
   afterAll(() => server.close());
 
   test("status test", async () => {
     const response = await request(app)
       .post("/api/auth/login")
       .auth("mail@gmail.com", "123456");
-    console.log(response);
+    expect(response.status).toBe(200);
   });
 
   test("login fields test", async () => {
     const response = await request(app)
       .post("/api/auth/login")
       .auth("mail@gmail.com", "123456");
-    const [users] = response.body;
-    expect(typeof users.email).toBe("string");
-    expect(typeof users.subscription).toBe("string");
+    const [user] = response.body;
+    expect(typeof user.email).toBe("string");
+    expect(typeof user.subscription).toBe("string");
   });
 });
